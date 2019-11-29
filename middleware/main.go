@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Logger 定义
+// Logger 自定义
 func Logger() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		t := time.Now()
@@ -29,8 +29,8 @@ func Logger() gin.HandlerFunc {
 }
 
 func main() {
-	r := gin.Default()
-	r.Use(Logger())
+	r := gin.New()                  // Default() 自动包含了Logger/Recovery中间件
+	r.Use(Logger(), gin.Recovery()) // Recover中间件能恢复panic
 
 	r.GET("/test", func(c *gin.Context) {
 		// 获取gin上下文中的变量example
